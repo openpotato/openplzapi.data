@@ -1,0 +1,20 @@
+pool:
+  vmImage: 'windows-2022'
+    
+variables:
+- group: 'github-config'
+
+steps:
+- task: PowerShell@2
+  displayName: 'Push to GitHub'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  inputs:
+    targetType: 'inline'
+    script: |
+      git remote add github https://$(PAT)@github.com/openpotato/openplzapi.data.git
+      git fetch github
+      git checkout .
+      git push github HEAD:main
+      git push --tags github HEAD:main
+    pwsh: true
+    
