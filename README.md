@@ -8,25 +8,39 @@ This dataset is an extract from the regional OpenStreetMap file for Germany [ger
 
 1. Read in all postal code areas (OSM relations), municipality areas (OSM relations) and streets (OSM ways) together with their geometric information.
 
-2. For each OSM Street, determine the geometric centre and in which municipality and postcode area it is located.
+2. Include only ways which have one of the the following properties:
 
-3. Create a new street object (name, postal code, locality, regional key) from the combination of the three data objects (OSM street, OSM municipality area, OSM postal code area).
+    Name      | Value
+    --------- | -----
+    `place`   | `square`
+	`leisure` | `park`
+	`highway` | `primary`
+	`highway` | `secondary`
+	`highway` | `tertiary`
+	`highway` | `residential`
+	`highway` | `living_street`
+	`highway` | `road`
+	`highway` | `unclassified`
+	`highway` | `footway`
+	`highway` | `pedestrian`
+	`highway` | `track` (but only for `tracktype=grade1`)
+	`highway` | `service` (but only for `service=alley`)
 
-4. Shorten all street names with `strasse` or `Strasse` to `str.` or `Str.`.
+3. For each OSM Street, determine the geometric centre and in which municipality and postcode area it is located.
 
-5. Ignore all streets with names matching the following regular expression: `^(\\?|\\+|-|_|\\(.*\\))$`.
+4. Create a new street object (name, postal code, locality, regional key) from the combination of the three data objects (OSM street, OSM municipality area, OSM postal code area).
 
-6. Export all street objects to CSV.
+5. Shorten all street names with `strasse` or `Strasse` to `str.` or `Str.`.
+
+6. Ignore all streets with names matching the following regular expression: `^(\\?|\\+|-|_|\\(.*\\))$`.
+
+7. Export all street objects to CSV.
 
 ## Data quality
 
 The data in the OpenStreetMap project is not perfect, but surprisingly well maintained for Germany.  
 
-+ Two municipality regional keys no longer exist due to territorial reforms: 
-  + 09273454 Hienheimer Forst, dissolved on 01-03-2020
-  + 09472459 Langweiler Wald, dissolved on 01-01-2022
-
-+ A total of 76 municipality regional keys from the official [GV100AD (Gemeindeleitdatei)](https://www.destatis.de/EN/Themes/Countries-Regions/Regional-Statistics/OnlineListMunicipalities/_inhalt.html) are not represented. This is largely due to the fact that these are areas without buildings and proper roads.
++ A total of 120 municipality regional keys from the official [GV100AD (Gemeindeleitdatei)](https://www.destatis.de/EN/Themes/Countries-Regions/Regional-Statistics/OnlineListMunicipalities/_inhalt.html) are not represented. This is largely due to the fact that these are areas without buildings and proper roads.
 
 + Streets and their postal codes or their municipality keys are determined on the basis of geometrical comparisons. This procedure is not 100% perfect.
 
