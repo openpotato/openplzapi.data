@@ -1,6 +1,9 @@
 name: Create OSM diff
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
