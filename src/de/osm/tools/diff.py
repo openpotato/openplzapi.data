@@ -11,7 +11,7 @@ def diff_csv(osm_file, del_file, diff_file):
     # Open the osm_file and diff_file
     with open(osm_file, mode='r', newline='', encoding="UTF8") as osm_stream, open(diff_file, mode='w', newline='', encoding="UTF8") as diff_stream:
         osm_reader = csv.reader(osm_stream, delimiter=',')
-        diff_writer = csv.writer(diff_stream, delimiter=',')
+        diff_writer = csv.writer(diff_stream, delimiter=',', lineterminator='\n')
 
         # Get header from osm_file and write it to diff_file
         osm_header = next(osm_reader)
